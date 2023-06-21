@@ -1,9 +1,19 @@
-
 version: "3.8"
 services:
+  reactapp:
+    container_name: reactapp
+    image: shruti02/reactapp
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_BACKEND_URL: "http://localhost:8080"
+    depends_on:
+      - springboot-app
+
   springboot-app:
-    container_name: riskcalculation-app
-    image: riskcalculation-app
+    container_name: springriskcalculator
+    image: shruti02/springriskcalculator
     restart: always
     ports:
       - "8080:8080"
@@ -24,16 +34,8 @@ services:
     ports:
       - "3307:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-
-  ui:
-    container_name: myangularapp
-    image: riskcalculatorui:latest
-    ports:
-      - "8089:4200"
-    restart: always 
-    depends_on:
-      - springboot-app
-
+      MYSQL_ROOT_PASSWORD: root 
+  
 volumes:
   dockerdbdata:
+
